@@ -27,7 +27,6 @@ router.post("/signup", (req, res) => {
               let payload = {
                 id: createdUser.id,
                 email: createdUser.email,
-                iat: Date.now(),
               };
               console.log(payload);
               let token = jwt.encode(payload, config.jwtSecret);
@@ -42,6 +41,40 @@ router.post("/signup", (req, res) => {
           });
         } else {
           console.log("User already exists, try logging in instead");
+          res.sendStatus(401);
+        }
+      });
+    } else {
+      res.sendStatus(401);
+    }
+});
+
+// User sign-in route:
+router.post("/login", (req, res) => {
+    if (req.body.email && req.body.password) {
+      console.log(req.body.email);
+      User.findOne({ email: req.body.email }, (error, user) => {
+        if (error) console.log(error);
+        if (user) {
+          console.log("Found user. Checking password...");
+          if (bcrypt.compareSync(req.body.password, user.password)) {
+            console.log("Password correct, generating JWT...");
+            let payload = {
+              id: user.id,
+              email: user.email,
+              iat: Date.now(),
+            };
+            let token = jwt.encode(payload, config.jwtSecret);
+            console.log(token);
+            res.json({
+              token: token,
+            });
+          } else {
+            console.log("Wrong password");
+            res.sendStatus(401);
+          }
+        } else {
+          console.log("Couldn't find user. Try signing up.");
           res.sendStatus(401);
         }
       });
