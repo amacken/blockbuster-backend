@@ -62,7 +62,6 @@ router.post("/login", (req, res) => {
             let payload = {
               id: user.id,
               email: user.email,
-              iat: Date.now(),
             };
             let token = jwt.encode(payload, config.jwtSecret);
             console.log(token);
