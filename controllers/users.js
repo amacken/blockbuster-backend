@@ -6,7 +6,7 @@ const passport = require("../config/passport");
 const config = require("../config/config");
 const User = require("../models/user");
 
-// User create route. AKA Signup:
+// User signup route:
 router.post("/signup", (req, res) => {
     console.log(req.body);
     if (req.body.email && req.body.password) {
