@@ -10,7 +10,6 @@ const movieSchema = new Schema({
     Runtime: { type: String},
     Genre: { type: String },
     Director: { type: String },
-    Writer: { type: String},
     Actors: { type: String },
     Plot: { type: String },
     Poster: { type: String },
