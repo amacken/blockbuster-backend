@@ -23,6 +23,7 @@ router.delete('/:id', (req, res) => {
 
 // Update
 router.put('/:id', (req, res) => {
+    console.log(req.body);
     Movie.findByIdAndUpdate(req.params.id, req.body, { new: true }, (error, updatedMovie) => {
         error ?
         res.status(404).json(error):
@@ -32,6 +33,7 @@ router.put('/:id', (req, res) => {
 
 // Create
 router.post('/', (req, res) => {
+    console.log(req.body);
     Movie.create(req.body, (error, createdMovie) => {
         error ?
         res.status(404).json(error):
